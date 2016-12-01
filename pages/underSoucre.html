@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Under Source</title>
+    <!--Public CSS-->
+    <link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../css/public.css" rel="stylesheet" type="text/css">
+
+    <!--Pages CSS-->
+
+</head>
+<body>
+<span></span>
+<!--Public JS-->
+<!--<script type="text/javascript" src="../js/jquery-1.8.0.min.js"></script>-->
+<!--<script type="text/javascript" src="../js/bootstrap.min.js"></script>-->
+<script type="text/javascript" src="../js/underscore.js"></script>
+<script>
+//    _.each([1,2,3],alert);
+//    数组处理
+    _.map([1,2,3],function (num) {
+        return num*3;
+    });
+    console.log(
+            _.map({one:1,two:2,three:3},function (num,key) {
+            return num*2;
+        })
+    );
+    console.log(
+        _.reduce(["a","b","c"],function (memo,num) {
+            return memo+num;
+        })
+    )
+</script>
+</body>
+</html>

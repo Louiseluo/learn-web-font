@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!--
+*名称：连连看
+*作者：雷东升
+*邮箱：leids@foxmail.com
+*描述：
+经典的连连看游戏，使用面向过程的方法实现。游戏中最难的是寻路算法，也就是如何判断两个相同图标之间的路是畅通的（所谓畅通，是指从一个图标出发，在“两折”之内可以抵达目标元素）。编程中首先实现了“直线”连通，然后将“一折”问题分解成“直线”问题，再将“两折”问题分解成“一折”问题，最后完美解决。
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>符文连连看</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+        }
+
+        table {
+            border-collapse: collapse;
+            font-size: 30px;
+            font-weight: bold;
+            margin: 70px auto;
+            background: #000;
+            color: #FFF;
+            border: 10px solid #999;
+        }
+
+        th, td {
+            margin: 0;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #FFF;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        input {
+            margin: 0;
+            padding: 0;
+            font-size: 40px;
+            padding: 10px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        p {
+            margin: 0;
+            padding: 10px;
+            color: #333;
+            font-size: 50px;
+        }
+
+        div {
+            position: absolute;
+            right: 200px;
+            bottom: 80px;
+            text-align: center;
+        }
+    </style>
+
+    <!--Pages CSS-->
+
+</head>
+<body>
+<table>
+    <tbody>
+    <tr>
+        <td>Ψ</td>
+        <td>Θ</td>
+        <td>Δ</td>
+        <td>Φ</td>
+        <td>Ξ</td>
+        <td>∇</td>
+        <td>Γ</td>
+        <td>Ψ</td>
+        <td>∃</td>
+        <td>Ω</td>
+        <td>Ω</td>
+        <td>Ψ</td>
+    </tr>
+    <tr>
+        <td>Φ</td>
+        <td>∀</td>
+        <td>Λ</td>
+        <td>∀</td>
+        <td>Δ</td>
+        <td>Θ</td>
+        <td>∃</td>
+        <td>Σ</td>
+        <td>Λ</td>
+        <td>Γ</td>
+        <td>Ξ</td>
+        <td>Λ</td>
+    </tr>
+    <tr>
+        <td>Λ</td>
+        <td>Ξ</td>
+        <td>Γ</td>
+        <td>Σ</td>
+        <td>Λ</td>
+        <td>Φ</td>
+        <td>Σ</td>
+        <td>Λ</td>
+        <td>Γ</td>
+        <td>∇</td>
+        <td>Δ</td>
+        <td>Ω</td>
+    </tr>
+    <tr>
+        <td>Σ</td>
+        <td>Ω</td>
+        <td>Γ</td>
+        <td>∃</td>
+        <td>Ψ</td>
+        <td>Ω</td>
+        <td>Θ</td>
+        <td>Δ</td>
+        <td>Ω</td>
+        <td>Λ</td>
+        <td>Σ</td>
+        <td>Σ</td>
+    </tr>
+    <tr>
+        <td>Γ</td>
+        <td>Φ</td>
+        <td>Φ</td>
+        <td>Θ</td>
+        <td>∀</td>
+        <td>∀</td>
+        <td>Ξ</td>
+        <td>Ξ</td>
+        <td>∃</td>
+        <td>Λ</td>
+        <td>∀</td>
+        <td>Ω</td>
+    </tr>
+    <tr>
+        <td>∇</td>
+        <td>Ψ</td>
+        <td>Ψ</td>
+        <td>∃</td>
+        <td>Ψ</td>
+        <td>Φ</td>
+        <td>Λ</td>
+        <td>∃</td>
+        <td>Ω</td>
+        <td>Λ</td>
+        <td>Γ</td>
+        <td>Σ</td>
+    </tr>
+    <tr>
+        <td>Ξ</td>
+        <td>Γ</td>
+        <td>Θ</td>
+        <td>Ξ</td>
+        <td>∀</td>
+        <td>Φ</td>
+        <td>Ω</td>
+        <td>Σ</td>
+        <td>∀</td>
+        <td>∀</td>
+        <td>Σ</td>
+        <td>Ψ</td>
+    </tr>
+    <tr>
+        <td>Δ</td>
+        <td>Γ</td>
+        <td>Δ</td>
+        <td>Δ</td>
+        <td>Γ</td>
+        <td>∃</td>
+        <td>∃</td>
+        <td>Σ</td>
+        <td>Θ</td>
+        <td>Γ</td>
+        <td>Ω</td>
+        <td>Φ</td>
+    </tr>
+    <tr>
+        <td>∇</td>
+        <td>Θ</td>
+        <td>Δ</td>
+        <td>Ψ</td>
+        <td>Δ</td>
+        <td>Δ</td>
+        <td>∇</td>
+        <td>Θ</td>
+        <td>∀</td>
+        <td>∀</td>
+        <td>∇</td>
+        <td>∃</td>
+    </tr>
+    <tr>
+        <td>∀</td>
+        <td>Ψ</td>
+        <td>Φ</td>
+        <td>Ψ</td>
+        <td>∇</td>
+        <td>Δ</td>
+        <td>Σ</td>
+        <td>∇</td>
+        <td>∃</td>
+        <td>Λ</td>
+        <td>Ξ</td>
+        <td>Ξ</td>
+    </tr>
+    <tr>
+        <td>∃</td>
+        <td>Ξ</td>
+        <td>Φ</td>
+        <td>Θ</td>
+        <td>Ξ</td>
+        <td>Ω</td>
+        <td>Ξ</td>
+        <td>∇</td>
+        <td>∇</td>
+        <td>Ω</td>
+        <td>Θ</td>
+        <td>Θ</td>
+    </tr>
+    <tr>
+        <td>∇</td>
+        <td>Ψ</td>
+        <td>∀</td>
+        <td>Σ</td>
+        <td>Φ</td>
+        <td>Δ</td>
+        <td>Φ</td>
+        <td>Λ</td>
+        <td>Θ</td>
+        <td>Γ</td>
+        <td>∃</td>
+        <td>∇</td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <input type="button" value="重排">
+    <p>00:00</p>
+</div>
+
+
+</body>
+</html><!--Public JS-->
+<script type="text/javascript" src="../js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+</body>
+</html>

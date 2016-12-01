@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>贪吃蛇</title>
+    <!--Public CSS-->
+    <style>
+        table{
+            margin:60px auto 0;
+            border:10px solid #333;
+            background:#ccc;
+        }
+        table tr td{
+            width:8px;
+            height:8px;
+            padding:0;
+            border: 2px solid #ccc;
+            background: #ccc;
+        }
+    </style>
+    <!--Pages CSS-->
+
+
+</head>
+<body>
+<script>
+    (function reset() {
+        var ota = document.createElement("table");
+        var otb = document.createElement("tbody");
+//            JS生成table
+        var index = 0;
+        var snakeMove = null;
+        var timer = null;
+
+        for(var i = 0; i < 40; i++){
+            var otr = document.createElement("tr");
+            for(var j = 0; j < 40; j++){
+                var otd = document.createElement("td");
+                otr.appendChild(otd);
+            }
+            otb.appendChild(otr);
+        };
+        ota.appendChild(otb);
+
+        document.body.appendChild(ota);
+        ota.cellSpacing = 2;
+
+        var atd = otb.getElementsByTagName("td");
+        //随机生成一个目标点
+        fruit();
+
+        function fruit() {
+            var num = Math.floor(Math.random()* otb.length);
+        }
+
+    })();
+</script>
+</body>
+</html>

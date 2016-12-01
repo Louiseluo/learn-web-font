@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>三级目录</title>
+    <!--Public CSS-->
+    <link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../css/public.css" rel="stylesheet" type="text/css">
+
+    <!--Pages CSS-->
+    <style>
+        .ulBox{
+            position: relative;
+            height: auto;
+            width: 200px;
+            line-height: 45px;
+        }
+        .ulBox span{
+            border-top: 1px solid #cccccc;
+            display: block;
+        }
+        .ulBox>ul>li>span{
+            background-color: #a6e1ec;
+        }
+        .ulBox>ul>li>span~ul{
+            display: none;
+            background-color: #e4b9b9;
+            position: absolute;
+            top: 20px;
+            left: 200px;
+            width: 200px;
+            height: auto;
+        }
+        .ulBox>ul>li>span.active~ul{
+            display: block;
+        }
+        .ulBox>ul>li>span.active~ul>li>span~ul{
+            display: none;
+            background-color: yellowgreen;
+            position: absolute;
+            top: 10px;
+            left: 200px;
+            width: 200px;
+            height: auto;
+        }
+        .ulBox>ul>li>span.active~ul>li>span.active~ul{
+            display: block;
+        }
+    </style>
+
+</head>
+<body>
+<div class="ulBox">
+    <ul>
+        <li>
+            <span class="liTitle">1</span>
+            <ul>
+                <li>
+                    <span class="liTitle">1.1</span>
+                    <ul>
+                        <li>
+                            <span class="liTitle">1.1.1</span>
+                        </li>
+                        <li>
+                            <span class="liTitle">1.1.2</span>
+                        </li>
+                        <li>
+                            <span class="liTitle">1.1.3</span>
+                        </li>
+                        <li>
+                            <span class="liTitle">1.1.4</span>
+                        </li>
+                        <li>
+                            <span class="liTitle">1.1.5</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="liTitle">1.2</span>
+                    <ul>
+                        <li>
+                            <span class="liTitle">1.2.1</span>
+                        </li>
+                        <li>
+                            <span class="liTitle">1.2.2</span>
+                        </li>
+                        <li>
+                            <span class="liTitle">1.2.3</span>
+                        </li>
+                        <li>
+                            <span class="liTitle">1.2.4</span>
+                        </li>
+                        <li>
+                            <span class="liTitle">1.2.5</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="liTitle">1.3</span>
+                </li>
+                <li>
+                    <span class="liTitle">1.4</span>
+                </li>
+                <li>
+                    <span class="liTitle">1.5</span>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span class="liTitle">2</span>
+            <ul>
+                <li>
+                    <span class="liTitle">2.1</span>
+                    <ul>
+                        <li>
+                            <span class="liTitle">2.3.1</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!--Public JS-->
+<script type="text/javascript" src="../js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script>
+    $(".liTitle").hover(function () {
+        $(this).addClass("active");
+    },function () {
+        $(this).removeClass("active");
+        var nextUl = $(this).next("ul");
+        nextUl.mouseenter(function () {
+            $(this).prev("span").addClass("active");
+        });
+        nextUl.mouseleave(function () {
+            $(this).prev("span").removeClass("active");
+        })
+    })
+</script>
+</body>
+</html>
